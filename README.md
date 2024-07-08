@@ -7,4 +7,4 @@
 	智控宠物行为，守护公共安全。爱宠物，爱自己。
 
 团队名称：
-	PPT（PetPatrol Tech宠物巡逻科技）
+	PPT（PetPatrol Tech  宠物巡逻科技）
