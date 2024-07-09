@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .signin1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .signin2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function validateLogin() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+ 
+            // 假设正确的用户名和密码分别是 "admin" 和 "password123"
+            if(username === 'admin' && password === 'password123') {
+                // 跳转到另一个页面
+                window.location.href = 'test.html';
+            } else {
+                // 登录失败，清空输入并提示错误
+                alert('Invalid username or password!');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="signin1">
+        <p>
+            <form>
+            用户名:<input type="text" id="username" name="username" required><br>
+            密  码:<input type="password" id="password" name="password" required><br>
+            <div class="signin2"> 
+                <button type="button" onclick="validateLogin()">登录</button>
+            </div>
+            </form>
+        </p>
+    </div>   
+</body>
+</html>
