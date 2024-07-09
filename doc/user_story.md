@@ -1,4 +1,4 @@
-#PPT_PawTrace Pet Leash Supervision Platform Design
+#PPT_PawTrace Pet Leash Supervision Platform Design#
 ##Designing the interaction between RFID and cameras
 ###Complete hardware selection
 ###system design
