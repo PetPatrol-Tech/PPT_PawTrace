@@ -17,7 +17,7 @@
 ###Algorithm optimisation
 ###User interface design
 
-###Front-end construction
+##Front-end construction
 ###Requirements gathering
 ###Feasibility analysis
 ###Developing project plan
