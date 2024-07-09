@@ -15,13 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views,record,search
+from . import views,search,record
 
 urlpatterns = [
-    path("",views.hello2),
+    path("dbtest/",record.record),
     path("admin/", admin.site.urls),
     path("search/",search.search),
     path("search-form/",search.search_form),
     path("informationOfLivers/",views.information),
-
 ]
