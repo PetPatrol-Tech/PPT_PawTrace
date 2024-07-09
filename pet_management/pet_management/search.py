@@ -7,7 +7,7 @@ def search_form(request):
 def search(request):
     request.encoding='utf-8'
     if 'q' in request.GET and request.GET['q']:
-        message = "你搜索的内容" + request.GET['q']
+        message = "你搜索的内容：" + request.GET['q']
     else:
-        message = "你空"
+        message = "搜索内容为空"
     return HttpResponse(message)
