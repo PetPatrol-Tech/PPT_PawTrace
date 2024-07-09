@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation</title>
+    <style>
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{% url 'option1' %}">住户信息总览</a>
+        <a href="{% url 'option2' %}">宠物信息总览</a>
+        <a href="{% url 'option3' %}">事件处理历史</a>
+    </div>
+    <div class="content">
+        {% block content %}
+        <div class="container pt-5">
+            <h1>宠物信息总览</h1>
+            <p>宠物表格</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>宠物ID</th>
+                        <th>宠物名字</th>
+                        <th>宠物年龄</th>
+                        <th>住户ID</th>
+                        <th>宠物类别</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr>
+                        <td>{{ pet.pet_id }}</td>
+                        <td>{{ pet.pet_name }}</td>
+                        <td>{{ pet.pet_age }}</td>
+                        <td>{{ pet.resident.id }}</td>
+                        <td>{{ pet.pet_category }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

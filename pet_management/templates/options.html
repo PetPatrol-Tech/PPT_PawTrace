@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation</title>
+    <style>
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{% url 'option1' %}">住户信息总览</a>
+        <a href="{% url 'option2' %}">宠物信息总览</a>
+        <a href="{% url 'option3' %}">事件处理历史</a>
+    </div>
+    <div class="content">
+        {% block content %}
+        <div class="container pt-5">
+            <h1>住户信息总览</h1>
+            <p>住户表格</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>住户序号</th>
+                        <th>户主姓名</th>
+                        <th>联系电话</th>
+                        <th>登记日期</th>
+                        <th>登记的宠物数</th>
+                        <th>户主状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for liver in all%}
+                    <tr>
+                        <td>{{liver.id}}</td>
+                        <td>{{liver.name}}</td>
+                        <td>{{liver.phoneNumber}}</td>
+                        <td>{{liver.date}}</td>
+                        <td>{{liver.numOfPets}}</td>
+                        <td>{{liver.state}}</td>
+                    {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>
