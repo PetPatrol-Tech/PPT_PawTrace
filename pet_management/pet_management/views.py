@@ -39,6 +39,9 @@ def login(request):
 
 def option4(request):
     incident_number = request.GET.get('incident_number')
-    image=[]
-    image.append(Images.objects.filter(Incident_number_id=incident_number))
+    print(incident_number)
+    image = []
+    ans=Images.objects.get(incident_number_id=incident_number)
+    print(ans)
+    image.append(ans)
     return render(request, 'option4.html', {'images': image})
