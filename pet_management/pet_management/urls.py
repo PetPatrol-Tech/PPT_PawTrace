@@ -15,16 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views,search,record
+from . import views, search
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
-    path("dbtest/",record.record),
+    path("", views.login),
     path("admin/", admin.site.urls),
-    path("search/",search.search),
-    path("search-form/",search.search_form),
-    path("informationOfLivers/",views.information),
-    path("choices",views.option),
+    path("search/", search.search),
+    path("search-form/", search.search_form),
+    path("informationOfLivers/", views.information),
+    path("choices", views.option),
     path('option1/', views.option1, name='option1'),
     path('option2/', views.option2, name='option2'),
     path('option3/', views.option3, name='option3'),
+    path('option4/', views.option4, name='option4'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
