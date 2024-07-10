@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,127 +9,140 @@
         body {
             display: flex;
         }
+
         .sidebar {
             width: 200px;
             background-color: #f4f4f4;
             padding: 20px;
         }
+
         .content {
             flex-grow: 1;
             padding: 20px;
         }
+
         .sidebar a {
             display: block;
             padding: 10px;
             text-decoration: none;
             color: #000;
         }
+
         .sidebar a:hover {
             background-color: #ddd;
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <a href="{% url 'option1' %}">住户信息总览</a>
         <a href="{% url 'option2' %}">宠物信息总览</a>
-        <a href="{% url 'option3' %}">事件处理历史</a>
+        <a href="{% url 'option3' %}">待处理事件</a>
+        <a href="{% url 'option4' %}">人工处理组件</a>
     </div>
     <div class="content">
         {% block content %}
         <!DOCTYPE html>
         <html>
-<head>
-    <meta charset="utf-8">
-    <title>事件管理系统</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
-    </style>
-</head>
-<body>
 
-<div class="header">
-    <h1>事件管理系统</h1>
-    <div>
-        <strong>待处理事件数:</strong>
-        <span id="pendingCount">0</span>
-    </div>
-</div>
+        <head>
+            <meta charset="utf-8">
+            <title>事件管理系统</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
 
-<table>
-    <thead>
-        <tr>
-            <th>Incident</th>
-            <th>Name</th>
-            <th>PhoneNumber</th>
-            <th>RecordTime</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for incident in incidents %}
-        <tr>
-            <td>{{ incident.incident_number }}</td>
-            <td>{{ incident.resident.name }}</td>
-            <td>{{ incident.resident.phoneNumber }}</td>
-            <td>{{ incident.record_time }}</td>
-            <td>{{ incident.status }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
 
-<script>
-    function updatePendingCount() {
-        const tableBody = document.getElementById('incidentTableBody');
-        const rows = tableBody.getElementsByTagName('tr');
-        let pendingCount = 0;
+                table,
+                th,
+                td {
+                    border: 1px solid black;
+                }
 
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            const status = cells[4].innerText;
-            if (status.toLowerCase() === 'pending') {
-                pendingCount++;
-            }
-        }
+                th,
+                td {
+                    padding: 10px;
+                    text-align: left;
+                }
 
-        document.getElementById('pendingCount').innerText = pendingCount;
-    }
+                th {
+                    background-color: #f2f2f2;
+                }
 
-    // 初始化待处理事件数
-    updatePendingCount();
-</script>
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 0;
+                }
+            </style>
+        </head>
 
-</body>
-</html>
+        <body>
 
+            <div class="header">
+                <h1>待处理事件管理系统</h1>
+                <div>
+                    <strong>待处理事件数:</strong>
+                    <span id="pendingCount">0</span>
+                </div>
+            </div>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Incident</th>
+                        <th>Name</th>
+                        <th>PhoneNumber</th>
+                        <th>RecordTime</th>
+                        <th class="button-cell">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for incident in incidents %}
+                    <tr>
+                        <td>{{ incident.incident_number }}</td>
+                        <td>{{ incident.resident.name }}</td>
+                        <td>{{ incident.resident.phoneNumber }}</td>
+                        <td>{{ incident.record_time }}</td>
+                        <td>{{ incident.status }}
+                            <form action="{% url 'option4' %}" method="get">
+                                <input type="hidden" name="incident_number" value="{{ incident.incident_number }}">
+                                <button type="submit" class="status-button">处理</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <script>
+                function updatePendingCount() {
+                    const rows = document.querySelectorAll('tbody tr');
+                    let pendingCount = 0;
+                    rows.forEach(row => {
+                        const statusCell = row.cells[4];
+                        if (statusCell.textContent.trim() === '1') {
+                            pendingCount++;
+                        }
+                    });
+                    document.getElementById('pendingCount').textContent = pendingCount;
+                }
 
+                document.addEventListener('DOMContentLoaded', updatePendingCount);
+            </script>
+        </body>
+
+        </html>
 
         {% endblock %}
     </div>
 </body>
+
 </html>

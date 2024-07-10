@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation</title>
+    <style>
+        body {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .image-container img {
+            margin: 10px;
+            max-width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="{% url 'option1' %}">住户信息总览</a>
+        <a href="{% url 'option2' %}">宠物信息总览</a>
+        <a href="{% url 'option3' %}">事件处理历史</a>
+        <a href="{% url 'option4' %}">人工审核组件</a>
+    </div>
+    <div class="content">
+        {% block content %}
+        <div class="container pt-5">
+            <h1>图像库</h1>
+            <div class="image-container">
+                {% for image in images %}
+                <div>
+                    <img src="../media/{{image.image }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+
+</html>
