@@ -30,6 +30,8 @@ urlpatterns = [
     path('option2/', views.option2, name='option2'),
     path('option3/', views.option3, name='option3'),
     path('option4/', views.option4, name='option4'),
+    path('refresh_state/', views.refresh_state, name='refresh_state'),
+    path('update_status/', views.update_status, name='update_status'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

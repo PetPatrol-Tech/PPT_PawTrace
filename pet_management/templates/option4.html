@@ -4,68 +4,210 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,400&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sidebar Navigation</title>
     <style>
         body {
             display: flex;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
         .sidebar {
             width: 200px;
-            background-color: #f4f4f4;
+            background-color: #2950a9;
+            color: #fff;
             padding: 20px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h1 {
+            font-size: 2em;
+            /* 字体大小，比默认的body字体大 */
+            color: #c7c02d;
+            /* 深绿色 */
+            margin-bottom: 20px;
+            /* 底部外边距 */
+            letter-spacing: 2px;
+            /* 字母间距 */
+            font-weight: bold;
+            /* 字体加粗 */
         }
 
         .content {
-            flex-grow: 1;
+            margin-left: 220px;
             padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .sidebar a {
             display: block;
             padding: 10px;
             text-decoration: none;
-            color: #000;
+            color: #fafafa;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .sidebar a:hover {
-            background-color: #ddd;
+            background-color: #be459c;
+        }
+
+        .slogan {
+            position: relative;
+            /* 相对于其最近的非静态定位祖先元素定位 */
+            z-index: 1;
+            /* 确保口号始终显示在内容上方 */
+            width: 100%;
+            /* 可以根据需要调整宽度 */
+            padding: 10px 0;
+            /* 上下内边距 */
+            background-color: rgba(56, 103, 204, 0.8);
+            /* 背景颜色，带透明度 */
+            color: #e0e4e2;
+            /* 文字颜色 */
+            text-align: center;
+            /* 文字居中 */
+            font-size: 14px;
+            /* 字体大小 */
+            font-style: italic;
+            /* 斜体字 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* 添加阴影效果 */
         }
 
         .image-container {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
+            gap: 10px;
+            margin: 5px auto;
+            max-width: 100%;
         }
 
-        .image-container img {
-            margin: 10px;
-            max-width: 200px;
+        .img-adjusted {
+            max-width: 80%;
+            height: auto;
+            max-height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .img-adjusted:hover {
+            transform: scale(1.05);
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            /* 垂直居中对齐 */
+            margin-bottom: 10px;
+            /* 每个选项之间的间距 */
+        }
+
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .custom-form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .custom-radio {
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border-radius: 50%;
+            outline: none;
+            border: 2px solid #ccc;
+            transition: all 0.2s ease-in-out;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .custom-radio:checked {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .custom-radio:focus {
+            box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.25);
+        }
+
+        .custom-label {
+            font-size: 16px;
+            color: #333;
         }
     </style>
 </head>
 
-<body>
+<body style="background-color: #b7ddf1;">
     <div class="sidebar">
+        <h1>PawTrace</h1>
         <a href="{% url 'option1' %}">住户信息总览</a>
         <a href="{% url 'option2' %}">宠物信息总览</a>
-        <a href="{% url 'option3' %}">事件处理历史</a>
-        <a href="{% url 'option4' %}">人工审核组件</a>
+        <a href="{% url 'option3' %}">待处理事件</a>
     </div>
     <div class="content">
-        {% block content %}
+        <div class="slogan">
+            建成让每一位居民，无论是两脚还是四脚成员，都能在安全、舒适与欢乐中共融共生的理想家园！
+        </div>
         <div class="container pt-5">
-            <h1>图像库</h1>
             <div class="image-container">
                 {% for image in images %}
                 <div>
-                    <img src="../media/{{image.image }}">
+                    <img src="../media/{{image.image }}" class="img-adjusted">
+                    <div class="container mt-3">
+            <form action="{% url 'update_status' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="Incidentid" value="{{ image.Incident_number_id }}">
+
+                <div class="d-flex justify-content-center">
+                    <input class="custom-radio" type="radio" name="optradio" id="radio1" value="option1"
+                        autocomplete="off">
+                    <label class="custom-label" for="radio1">未牵绳</label>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
+                    <input class="custom-radio" type="radio" name="optradio" id="radio2" value="option2"
+                        autocomplete="off">
+                    <label class="custom-label" for="radio2">已牵绳</label>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary mt-3">提交</button>
+                </div>
+
+
+            </form>
+        </div>
+
+
+
                 </div>
                 {% endfor %}
             </div>
         </div>
-        {% endblock %}
     </div>
 </body>
 
