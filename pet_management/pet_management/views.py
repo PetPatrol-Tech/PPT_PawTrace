@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from Residents.models import Resident
 from Incident.models import Incident
 from Images.models import Images
@@ -41,7 +41,7 @@ def option4(request):
     incident_number = request.GET.get('incident_number')
     print(incident_number)
     image = []
-    ans=Images.objects.get(incident_number_id=incident_number)
+    ans = Images.objects.get(Incident_number_id=incident_number)
     print(ans)
     image.append(ans)
     return render(request, 'option4.html', {'images': image})
